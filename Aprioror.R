@@ -1,0 +1,13 @@
+library(arules)
+library(arulesViz)
+data=read.transactions("file:///D:/Data Sets - R/Store Data Apyori/store data.csv")
+inspect(head(data))
+list(data) #7501 transactions
+frequentItems=eclat(data,parameter=list(supp=0.07,maxlen=15))
+inspect(frequentItems)
+itemFrequencyPlot(data,topN=10,main="Item Frquency")
+rules=apriori(data,parameter=list(supp=0.001, confidence=0.5))
+sort_rules=sort(rules,by="confidence",decreasing=TRUE)
+inspect(head(sort_rules,n=10))
+subrules=head(rules,n=10,by="confidence")
+plot(subrules,method="graph")
